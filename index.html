@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل تطبيق الطيار</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --white: #ffffff;
+            --text-dark: #2C3E50;
+            --glass-bg: rgba(255, 255, 255, 0.85); /* لون شفاف زجاجي */
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            text-decoration: none;
+        }
+
+        /* إعدادات الخلفية (هنا هتحط مسار صورتك) */
+        body {
+            /* قم بتغيير 'background.jpg' لاسم صورتك */
+            background-image: url('background.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #2C3E50; /* لون بديل لو الصورة محملتش */
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* غطاء داكن خفيف فوق الصورة عشان الكلام يبان بوضوح */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px; /* حجم مناسب للموبايل والكمبيوتر */
+            margin: 40px auto;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        /* صندوق المحتوى الشفاف */
+        .glass-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+        }
+
+        /* الهيدر واللوجو */
+        .app-logo {
+            width: 130px;
+            height: 130px;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            border: 3px solid white;
+        }
+
+        .app-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .app-desc {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* زرار التحميل وتأثير النبض */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 16px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 800;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        /* قسم الفيديو (تم التعديل ليكون طولي - Portrait) */
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 260px; /* تحديد أقصى عرض ليكون مثل شاشة الموبايل */
+            margin: 0 auto; /* توسيط الفيديو */
+            border-radius: 20px; /* حواف دائرية تشبه الموبايل */
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            background: #000;
+            border: 4px solid var(--text-dark); /* إطار حول الفيديو */
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* قسم الدعم الفني */
+        .support-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .support-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 10px;
+            text-align: center;
+            border: 1px solid #eee;
+            transition: 0.3s;
+        }
+
+        .support-card:hover {
+            transform: scale(1.05);
+            border-color: #25D366;
+        }
+
+        .support-icon {
+            width: 45px;
+            height: 45px;
+            background: #e8f5e9;
+            color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 10px;
+        }
+
+        .support-role {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .support-name {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .support-btn {
+            background: #25D366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* حقوق الملكية */
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-top: 10px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="container">
+        
+        <!-- القسم الأول: اللوجو والتحميل -->
+        <div class="glass-box">
+            <!-- مسار اللوجو -->
+            <img src="logo.png" alt="الطيار لوجو" class="app-logo" onerror="this.src='https://placehold.co/130?text=Logo'">
+            <h1 class="app-title">تطبيق الطيار</h1>
+            <p class="app-desc">أسرع دليفري في طبهار 🛵<br>اطلب كل اللي تحتاجه من مطاعم، صيدليات، وسوبر ماركت ويوصلك لحد باب البيت.</p>
+            
+            <!-- لينك التحميل من ميديا فاير يوضع هنا بدل علامة # -->
+            <a href="https://www.mediafire.com/file/9yne5ow7eqncav8/Altayyar+App.apk/file" target="_blank" class="download-btn">
+                <i class="fa-brands fa-android" style="font-size: 22px;"></i>
+                تحميل التطبيق الآن (APK)
+            </a>
+            <p style="font-size: 11px; color: #666; margin-top: 12px;">حجم التطبيق صغير جداً، وآمن 100%</p>
+        </div>
+
+        <!-- القسم الثاني: الفيديو التعليمي -->
+        <div class="glass-box">
+            <h2 class="section-title"><i class="fa-solid fa-circle-play" style="color: red;"></i> كيف تستخدم التطبيق؟</h2>
+            <p style="font-size: 13px; color: #555; margin-bottom: 15px;">شاهد هذا الفيديو السريع لمعرفة كيفية تسجيل الدخول وطلب الأوردر الخاص بك.</p>
+            
+            <!-- الفيديو الطولي -->
+            <div class="video-container">
+                <!-- مسار الفيديو هنا -->
+                <video controls poster="video-cover.jpg">
+                    <source src="tutorial.mp4" type="video/mp4">
+                    متصفحك لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
+        </div>
+
+        <!-- القسم الثالث: فريق الدعم -->
+        <div class="glass-box" style="margin-bottom: 10px;">
+            <h2 class="section-title"><i class="fa-solid fa-headset" style="color: var(--primary);"></i> فريق الدعم</h2>
+            <p style="font-size: 13px; color: #555; margin-bottom: 15px;">هل تواجه مشكلة؟ أو لديك استفسار؟ نحن هنا لمساعدتك!</p>
+            
+            <div class="support-grid">
+                <!-- كارت الإدارة -->
+                <div class="support-card">
+                    <div class="support-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="support-role">إدارة التطبيق</div>
+                    <div class="support-name">لطلبات الدليفري والمطاعم</div>
+                    <a href="https://wa.me/201123153850" target="_blank" class="support-btn">تواصل الآن</a>
+                </div>
+
+                <!-- كارت المطور -->
+                <div class="support-card">
+                    <div class="support-icon"><i class="fa-solid fa-code"></i></div>
+                    <div class="support-role">مطور التطبيق</div>
+                    <div class="support-name">م/ محمد (فيرس) للمشاكل التقنية</div>
+                    <a href="https://wa.me/201004997697" target="_blank" class="support-btn" style="background: var(--text-dark);">تواصل مع المطور</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            برمجة وتطوير © محمد أحمد (فيرس) 2026
+        </div>
+
+    </div>
+
+</body>
+</html>
